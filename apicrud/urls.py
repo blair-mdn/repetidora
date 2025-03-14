@@ -18,11 +18,18 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from projects.api import ProjectViewSet
+from django.shortcuts import redirect
+
 
 router = DefaultRouter()
 router.register(r'projects', ProjectViewSet, basename='projects')
 
+# Vista para redirigir la raíz a /api/
+def redirect_to_api(request):
+    return redirect('/api/')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),  
+    path('', redirect_to_api),  # Redirige / a /api/
 ]
